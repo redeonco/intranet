@@ -1,0 +1,43 @@
+version: '3.1'
+
+services:
+
+  wordpress:
+    image: redeonco/wordpress-intranet
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: administrator
+      WORDPRESS_DB_PASSWORD: oncologia2022
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - ./wordpress:/var/www/html
+
+  db:
+    image: redeonco/mysql-intranet
+    restart: always
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: administrator
+      MYSQL_PASSWORD: oncologia2022
+      MYSQL_ROOT_PASSWORD: onc0r4d1um
+    volumes:
+      - ./db:/var/lib/mysql
+
+  phpmyadmin:
+    image: redeonco/phpmyadmin-intranet
+    restart: always
+    ports:
+      - 70:80
+    volumes:
+      - ./php:/usr/local/etc/php2/
+
+  xampp:
+    image: redeonco/xampp-intranet
+    restart: always
+    ports:
+      - 60:80
+    volumes:
+      - ./xamp:/www
